@@ -1,8 +1,8 @@
 # camel-event-notifier-reproducer
 
-The goal of this repository is to reproduce an issue with the camel-event-notifier component when registering Prometheus metrics.
+The goal of this repository is to be a reproducer for an issue with the [camel-micrometer](https://camel.apache.org/components/4.18.x/micrometer-component.html) component when registering Prometheus metrics for a route, serving as support for the [Pull Request #23864](https://github.com/apache/camel/pull/23864), submitted to [Apache Camel project](https://github.com/apache/camel).
 
-The following warning message is logged when a message is sent to a SEDA endpoint using Camel's `ProducerTemplate`:
+The following warning message is logged when a message is sent to a `SEDA` endpoint using Camel's `ProducerTemplate`:
 ```
 2026-06-08 14:32:45,577 WARN  [org.apache.camel.support.EventHelper] (Camel (camel-6) thread #21 - seda://producer) Error notifying event C99DFEF70A95789-0000000000000001 exchange completed took: 3ms. This exception will be ignored.: java.lang.IllegalArgumentException: Prometheus requires that all meters with the same name have the same set of tag keys. There is already an existing meter named 'camel_exchange_event_notifier_seconds' containing tag keys [camelContext, endpointName, eventType, failed, kind]. The meter you are attempting to register has keys [camelContext, endpointName, eventType, failed, kind, routeId].
         at io.micrometer.prometheus.PrometheusMeterRegistry.lambda$throwExceptionOnRegistrationFailure$19(PrometheusMeterRegistry.java:619)
